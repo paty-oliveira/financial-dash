@@ -1,6 +1,6 @@
 import streamlit as st
 
-from components import sidebar, container
+from ui.components import sidebar, container
 
 st.set_page_config(
     page_title="Stock Analysis Dashboard",
