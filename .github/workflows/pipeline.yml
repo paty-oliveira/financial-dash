@@ -25,4 +25,3 @@ jobs:
           skip-smoke: 'true'
           app-path: 'src/app.py'
           ruff: 'true'
-
