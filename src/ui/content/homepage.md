@@ -34,3 +34,9 @@ Your contributions will help improve the dashboard’s functionality, add new fe
 everyone. You can support us by buying a coffee on [Buy Me A Coffee](https://buymeacoffee.com/devpatrici0). Every little
 bit helps, and we
 deeply appreciate your support!
+
+### :point_down: Follow for Updates
+
+- [Linkedin](https://www.linkedin.com/in/ana-patr%C3%ADcia-oliveira/)
+- [Github](https://github.com/paty-oliveira)
+- [Substack](https://substack.com/@patrciaoliveira)
