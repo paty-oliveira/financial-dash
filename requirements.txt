@@ -1,3 +1,4 @@
 streamlit
 pytest
 streamlit-extras
+pandas
