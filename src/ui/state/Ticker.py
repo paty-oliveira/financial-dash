@@ -8,7 +8,7 @@ class Ticker:
         self.name = st.session_state["ticker"]
 
     def get_ticker(self):
-        return self.name
+        return self.name.upper()
 
     def is_available(self):
         return self.name != ""

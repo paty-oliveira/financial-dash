@@ -13,8 +13,8 @@ tab_content = {
 }
 
 
-def render():
+def render(_data_provider):
     options = list(tab_content.keys())
     current_tab = ui.tabs(options, default_value=options[0], key="current_tab")
 
-    return tab_content[current_tab]()
+    return tab_content[current_tab](_data_provider)
