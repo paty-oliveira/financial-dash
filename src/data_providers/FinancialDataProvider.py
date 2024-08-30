@@ -12,17 +12,17 @@ class FinancialDataProvider(ABC):
         pass
 
     @abstractmethod
-    def get_stock_info(self):
+    def get_stock_info(self) -> dict:
         pass
 
     @abstractmethod
-    def get_balance_sheet(self):
+    def get_balance_sheet(self) -> pd.DataFrame:
         pass
 
     @abstractmethod
-    def get_income_statement(self):
+    def get_income_statement(self) -> pd.DataFrame:
         pass
 
     @abstractmethod
-    def get_cash_flow(self):
+    def get_cash_flow(self) -> pd.DataFrame:
         pass
