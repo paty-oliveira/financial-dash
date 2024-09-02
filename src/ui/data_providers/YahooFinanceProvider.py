@@ -28,33 +28,25 @@ class YahooFinanceProvider(FinancialDataProvider, ABC):
 
     def get_stock_info(self) -> dict:
         try:
-            fields = [
-                "country",
-                "industry",
-                "sector",
-                "longBusinessSummary",
-                "symbol",
-                "longName",
-                "trailingPE",
-                "dividendYield",
-                "payoutRatio",
-                "trailingEps",
-                "returnOnAssets",
-                "returnOnEquity",
-                "marketCap",
-                "operatingCashflow",
-            ]
-
-            return {
-                key: self.general_info[key]
-                for key in fields
-                if key in self.general_info
-            }
+            return self.general_info
         except Exception as e:
             logging.error(f"Error fetching stock info for {self.stock}: {e}")
 
     def get_balance_sheet(self) -> pd.DataFrame:
         try:
+            fields = [
+                "Current Assets",
+                "Current Liabilities",
+                "Total Assets",
+                "Total Liabilities Net Minority Interest",
+                "Total Capitalization",
+                "Working Capital",
+                "Invested Capital",
+                "Total Debt",
+                "Net Debt",
+                "Stockholders Equity",
+            ]
+
             self.balance_sheet.loc["Debt to Equity"] = (
                 self.balance_sheet.loc["Total Liabilities Net Minority Interest"]
                 / self.balance_sheet.loc["Stockholders Equity"]
@@ -64,20 +56,52 @@ class YahooFinanceProvider(FinancialDataProvider, ABC):
                 / self.balance_sheet.loc["Current Liabilities"]
             )
 
-            return self.balance_sheet
+            df_balance_sheet = self.balance_sheet.transpose()
+            df_balance_sheet = df_balance_sheet.reindex(columns=fields, fill_value=0)
+
+            return df_balance_sheet.sort_index().tail(4)
         except Exception as e:
             logging.error(f"Error fetching balance sheet for {self.stock}: {e}")
 
     def get_income_statement(self) -> pd.DataFrame:
         try:
-            return self.income_stmt
+            fields = [
+                "Total Revenue",
+                "Cost Of Revenue",
+                "Gross Profit",
+                "Operating Expense",
+                "Operating Income",
+                "Total Expenses",
+                "Net Income From Continuing Operation Net Minority Interest",
+                "EBIT",
+                "EBITDA",
+                "General And Administrative Expense",
+                "Selling And Marketing Expense",
+                "Research And Development",
+                "Basic EPS",
+            ]
+
+            df_income_stmt = self.income_stmt.transpose()
+            df_income_stmt = df_income_stmt.reindex(columns=fields, fill_value=0)
+
+            return df_income_stmt.sort_index().tail(4)
 
         except Exception as e:
             logging.error(f"Error fetching income statement for {self.stock}: {e}")
 
     def get_cash_flow(self):
         try:
-            return self.cash_flow
+            fields = [
+                "Operating Cash Flow",
+                "Investing Cash Flow",
+                "Financing Cash Flow",
+                "Capital Expenditure",
+                "Free Cash Flow",
+            ]
+            df_cashflow = self.cash_flow.transpose()
+            df_cashflow = df_cashflow.reindex(columns=fields, fill_value=0)
+
+            return df_cashflow.sort_index().tail(4)
 
         except Exception as e:
             logging.error(f"Error fetching cash flow for {self.stock}: {e}")
