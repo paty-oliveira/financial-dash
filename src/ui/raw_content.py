@@ -1,3 +1,4 @@
+homepage_content = """
 ## Welcome to the Stock Analysis Dashboard! :rocket:
 
 This dashboard is designed to help you easily analyze and understand the performance of various stocks in the market.
@@ -40,3 +41,14 @@ deeply appreciate your support!
 - [Linkedin](https://www.linkedin.com/in/ana-patr%C3%ADcia-oliveira/)
 - [Github](https://github.com/paty-oliveira)
 - [Substack](https://substack.com/@patrciaoliveira)
+"""
+
+footer_content = """
+<div style="text-align: center; padding: 20px; font-size: 14px;">
+    © 2024 Stock Analysis Dashboard | Built with ❤️ for Financial Enthusiasts
+
+   <div style="margin-top: 10px; color: #6d6d6d;">
+       Disclaimer: All data is provided for informational purposes only and is not intended for trading or investment advice.
+   </div>
+</div>
+"""
