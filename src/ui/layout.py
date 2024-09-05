@@ -47,9 +47,9 @@ def render_header(financial_data):
     stock_info = financial_data.get_stock_info(
         st.session_state["ticker"],
     )
-    st.markdown(
-        f"### {stock_info['symbol']} - {stock_info['longName']}", unsafe_allow_html=True
-    )
+    ticker = stock_info["symbol"]
+    company_name = stock_info["longName"]
+    st.markdown(f"### {ticker} - {company_name}", unsafe_allow_html=True)
     # Render price change
     current_price = stock_info["currentPrice"]
     previous_close_price = stock_info["previousClose"]
@@ -88,6 +88,15 @@ def render_overview(financial_data):
         st.write("Placeholder for Company Summary")
 
     with st.container():
+        st.markdown("#### Company Profile")
+        # sector
+        # industry
+        # employees
+        # founded year
+        # Country
+        # Currency
+        # website
+        # (?) logo
         st.write(f"{quotes['longBusinessSummary']}")
 
 
