@@ -1,6 +1,6 @@
 import streamlit as st
 
-from .raw_content import homepage_content, footer_content
+from .raw_content import homepage_content, footer_content, not_found_ticker_content
 
 
 def render(financial_data):
@@ -8,7 +8,7 @@ def render(financial_data):
     if not ticker:
         render_homepage()
     elif not financial_data.is_valid_ticker(ticker):
-        st.write("Invalid ticker")
+        render_invalid_ticker_placeholder()
     else:
         render_stock_info(financial_data)
         render_footer()
@@ -16,6 +16,10 @@ def render(financial_data):
 
 def render_homepage():
     st.markdown(homepage_content, unsafe_allow_html=True)
+
+
+def render_invalid_ticker_placeholder():
+    st.markdown(not_found_ticker_content, unsafe_allow_html=True)
 
 
 def render_footer():

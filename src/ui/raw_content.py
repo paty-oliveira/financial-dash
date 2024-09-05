@@ -52,3 +52,20 @@ footer_content = """
    </div>
 </div>
 """
+
+not_found_ticker_content = """
+## Oops! Invalid Ticker Entered 🚫
+
+It looks like the stock ticker you entered doesn't match any results. Here are a few things you can try:
+
+- **Double-check the Ticker**: Make sure you've entered the correct ticker symbol. Tickers are usually 1 to 4 uppercase letters (e.g., AAPL for Apple, TSLA for Tesla).
+- **Search for Another Stock**: Enter a different ticker symbol to explore other stocks.
+- **Popular Tickers to Explore**:
+  - **AAPL**: Apple Inc.
+  - **GOOGL**: Alphabet Inc.
+  - **MSFT**: Microsoft Corporation
+  - **AMZN**: Amazon.com, Inc.
+  - **TSLA**: Tesla, Inc.
+
+Happy investing! 🎉
+"""
