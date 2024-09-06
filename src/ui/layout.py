@@ -89,6 +89,8 @@ def render_overview(financial_data):
 
     with st.container():
         st.markdown("#### Company Profile")
+        company_summary_expander = st.expander("Business Summary")
+        company_summary_expander.write(quotes["longBusinessSummary"])
         # sector
         # industry
         # employees
@@ -97,7 +99,6 @@ def render_overview(financial_data):
         # Currency
         # website
         # (?) logo
-        st.write(f"{quotes['longBusinessSummary']}")
 
 
 def render_balance_sheet(financial_data):
