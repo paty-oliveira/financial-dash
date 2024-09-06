@@ -6,7 +6,7 @@ from .sidebar import render as render_sidebar
 initial_state = {"ticker": ""}
 
 
-def run(financial_data):
+def run(financial_data, financial_calculations):
     st.set_page_config(
         page_title="Stock Analysis Dashboard",
         page_icon=":chart_with_upwards_trend:",
@@ -19,5 +19,5 @@ def run(financial_data):
             st.session_state[k] = v
 
     # performs the rendering
-    render_layout(financial_data)
+    render_layout(financial_data, financial_calculations)
     render_sidebar()

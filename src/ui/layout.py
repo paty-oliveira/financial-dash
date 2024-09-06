@@ -4,14 +4,14 @@ from soupsieve.util import lower
 from .raw_content import homepage_content, footer_content, not_found_ticker_content
 
 
-def render(financial_data):
+def render(financial_data, financial_calculations):
     ticker = st.session_state["ticker"]
     if not ticker:
         render_homepage()
     elif not financial_data.is_valid_ticker(ticker):
         render_invalid_ticker_placeholder()
     else:
-        render_stock_info(financial_data)
+        render_stock_info(financial_data, financial_calculations)
         render_footer()
 
 
@@ -27,9 +27,9 @@ def render_footer():
     st.markdown(footer_content, unsafe_allow_html=True)
 
 
-def render_stock_info(financial_data):
+def render_stock_info(financial_data, financial_calculations):
     # Render header
-    render_header(financial_data)
+    render_header(financial_data, financial_calculations)
     # Renders tabs
     tab_titles = ["Overview", "Balance Sheet", "Income Statement", "CashFlow"]
     tabs_renderings = [
@@ -44,7 +44,7 @@ def render_stock_info(financial_data):
             render_action(financial_data)
 
 
-def render_header(financial_data):
+def render_header(financial_data, financial_calculations):
     stock_info = financial_data.get_stock_info(
         st.session_state["ticker"],
     )
@@ -55,8 +55,11 @@ def render_header(financial_data):
     current_price = stock_info["currentPrice"]
     previous_close_price = stock_info["previousClose"]
     currency = stock_info["currency"]
-    current_price_content = f"{convert_currency_symbol(currency)}{current_price}"
-    price_diff = calculate_price_changes(current_price, previous_close_price)
+    currency_symbol = financial_calculations["currency_symbol"](currency)
+    current_price_content = f"{currency_symbol}{current_price}"
+    price_diff = financial_calculations["price_changes"](
+        current_price, previous_close_price
+    )
     price_diff_content = f"({price_diff}%)"
     price_change_content = (
         apply_text_color(price_diff_content, "red")
@@ -114,37 +117,6 @@ def render_income_stmt(financial_data):
 def render_cashflow(financial_data):
     cashflow = financial_data.get_cashflow(st.session_state["ticker"])
     st.dataframe(cashflow)
-
-
-def convert_currency_symbol(currency_symbol):
-    currency = {
-        "USD": "$",  # US Dollar
-        "EUR": "€",  # Euro
-        "JPY": "¥",  # Japanese Yen
-        "GBP": "£",  # British Pound Sterling
-        "AUD": "A$",  # Australian Dollar
-        "CAD": "C$",  # Canadian Dollar
-        "CHF": "CHF",  # Swiss Franc
-        "CNY": "¥",  # Chinese Yuan Renminbi
-        "HKD": "HK$",  # Hong Kong Dollar
-        "INR": "₹",  # Indian Rupee
-        "RUB": "₽",  # Russian Ruble
-        "BRL": "R$",  # Brazilian Real
-        "ZAR": "R",  # South African Rand
-        "KRW": "₩",  # South Korean Won
-        "MXN": "$",  # Mexican Peso
-        "SGD": "S$",  # Singapore Dollar
-        "NZD": "NZ$",  # New Zealand Dollar
-        "TRY": "₺",  # Turkish Lira
-        "SEK": "kr",  # Swedish Krona
-        "NOK": "kr",  # Norwegian Krone
-    }
-
-    return currency[currency_symbol]
-
-
-def calculate_price_changes(current_price, previous_close_price):
-    return round((current_price - previous_close_price) / previous_close_price, 2) * 100
 
 
 def apply_text_color(text, color):
