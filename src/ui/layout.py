@@ -1,4 +1,5 @@
 import streamlit as st
+from soupsieve.util import lower
 
 from .raw_content import homepage_content, footer_content, not_found_ticker_content
 
@@ -89,16 +90,15 @@ def render_overview(financial_data):
 
     with st.container():
         st.markdown("#### Company Profile")
-        company_summary_expander = st.expander("Business Summary")
-        company_summary_expander.write(quotes["longBusinessSummary"])
-        # sector
-        # industry
-        # employees
-        # founded year
-        # Country
-        # Currency
-        # website
-        # (?) logo
+        st.expander("Business Summary").write(quotes["longBusinessSummary"])
+        st.expander("Sector").markdown(
+            f" [{quotes['sector']}](https://finance.yahoo.com/sectors/{lower(quotes['sectorKey'])}) "
+        )
+        st.expander("Industry").markdown(
+            f" [{quotes['industry']}](https://finance.yahoo.com/sectors/{lower(quotes['sectorKey'])}/{lower(quotes['industryKey'])}) "
+        )
+        st.expander("Country").write(quotes["country"])
+        st.expander("Website").write(quotes["website"])
 
 
 def render_balance_sheet(financial_data):
