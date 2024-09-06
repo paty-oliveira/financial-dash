@@ -10,7 +10,7 @@ class YahooFinance:
     @staticmethod
     def is_valid_ticker(ticker: str) -> bool:
         stock = yf.Ticker(ticker)
-        return stock.isin is not None and len(stock.info) > 1
+        return len(stock.info) > 1
 
     @staticmethod
     def get_historical_data(
