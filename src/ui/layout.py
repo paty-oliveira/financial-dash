@@ -170,15 +170,21 @@ def render_overview(financial_data):
 
 
 def render_balance_sheet(financial_data):
-    balance_sheet = financial_data.get_yearly_balance_sheet(st.session_state["ticker"])
+    balance_sheet = financial_data.get_balance_sheet(
+        st.session_state["ticker"], frequency="quarterly"
+    )
     st.dataframe(balance_sheet)
 
 
 def render_income_stmt(financial_data):
-    income_stmt = financial_data.get_yearly_income_statement(st.session_state["ticker"])
+    income_stmt = financial_data.get_income_statement(
+        st.session_state["ticker"], frequency="quarterly"
+    )
     st.dataframe(income_stmt)
 
 
 def render_cashflow(financial_data):
-    cashflow = financial_data.get_yearly_cashflow(st.session_state["ticker"])
+    cashflow = financial_data.get_cashflow(
+        st.session_state["ticker"], frequency="quarterly"
+    )
     st.dataframe(cashflow)
