@@ -104,55 +104,59 @@ def render_overview(financial_data):
 
     with ratios_summary:
         st.markdown("#### Price and Market Data")
+        properties_text = [
+            "Previous Close",
+            "Open",
+            "Day High",
+            "Day Low",
+            "Volume",
+            "Market Cap",
+            "Beta",
+            "PE Ratio",
+            "EPS",
+            "Forward Dividend & Yield",
+        ]
+        values_text = [
+            f"**{quotes['previousClose']:,}**",
+            f"**{quotes['open']:,}**",
+            f"**{quotes['dayHigh']:,}**",
+            f"**{quotes['dayLow']:,}**",
+            f"**{quotes['volume']:,}**",
+            f"**{quotes['marketCap']:,}**",
+            f"**{quotes['beta']:.3}**",
+            f"**{quotes['trailingPE']:.4}**",
+            f"**{quotes['trailingEps']:.3}**",
+            (
+                f"**{quotes['dividendRate']:.2} ({quotes['dividendYield'] * 100:.2}%)**"
+                if "dividendRate" in quotes
+                else "0"
+            ),
+        ]
         properties, values = st.columns(2)
         with properties:
-            st.write("Previous Close")
-            st.write("Open")
-            st.write("Day High")
-            st.write("Day Low")
-            st.write("Volume")
-            st.write("Market Cap")
-            st.write("Beta")
-            st.write("PE Ratio")
-            st.write("EPS")
-            st.write("Forward Dividend & Yield")
+            for content in properties_text:
+                st.write(content)
 
         with values:
-            st.write(f" **{quotes['previousClose']:,}**")
-            st.write(f" **{quotes['open']:,}**")
-            st.write(f" **{quotes['dayHigh']:,}**")
-            st.write(f" **{quotes['dayLow']:,}**")
-            st.write(f" **{quotes['volume']:,}**")
-            st.write(f" **{quotes['marketCap']:,}**")
-            st.write(f" **{quotes['beta']:.3}**")
-            st.write(f" **{quotes['trailingPE']:.4}**")
-            st.write(f" **{quotes['trailingEps']:.3}**")
-            dividend_rate = (
-                quotes["dividendRate"] if "dividendRate" in quotes.keys() else "0"
-            )
-            dividend_yield = (
-                quotes["dividendYield"] * 100
-                if "dividendRate" in quotes.keys()
-                else "0"
-            )
-            st.write(f" **{dividend_rate:.2} ({dividend_yield:.2}%)**")
+            for content in values_text:
+                st.write(content)
 
     with st.container():
         st.markdown("#### Company Profile")
         st.write(quotes["longBusinessSummary"])
 
-        sector_name = quotes["sector"]
         sector_key = quotes["sectorKey"].lower()
-        sector_url = f"https://finance.yahoo.com/sectors/{sector_key}"
-        sector_content = apply_tag_style(sector_url, sector_name)
+        sector_content = apply_tag_style(
+            f"https://finance.yahoo.com/sectors/{sector_key}", quotes["sector"]
+        )
 
-        industry_name = quotes["industry"]
         industry_key = quotes["industryKey"].lower()
-        industry_url = f"https://finance.yahoo.com/sectors/{sector_key}/{industry_key}"
-        industry_content = apply_tag_style(industry_url, industry_name)
+        industry_content = apply_tag_style(
+            f"https://finance.yahoo.com/sectors/{sector_key}/{industry_key}",
+            quotes["industry"],
+        )
 
-        company_website = quotes["website"]
-        website_content = apply_tag_style(company_website, "Website")
+        website_content = apply_tag_style(quotes["website"], "Website")
 
         st.markdown(
             f"""
