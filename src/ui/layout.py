@@ -140,12 +140,14 @@ def render_overview(financial_data):
     with st.container():
         st.markdown("#### Company Profile")
         st.expander("Business Summary").write(quotes["longBusinessSummary"])
-        st.expander("Sector").markdown(
-            f" [{quotes['sector']}](https://finance.yahoo.com/sectors/{quotes['sectorKey'].lower()}) "
-        )
-        st.expander("Industry").markdown(
-            f" [{quotes['industry']}](https://finance.yahoo.com/sectors/{quotes['sectorKey'].lower()}/{quotes['industryKey'].lower()}) "
-        )
+        sector_name = quotes["sector"]
+        sector_key = quotes["sectorKey"].lower()
+        sector_url = f"https://finance.yahoo.com/sectors/{sector_key}"
+        st.expander("Sector").markdown(f" [{sector_name}]({sector_url}) ")
+        industry_name = quotes["industry"]
+        industry_key = quotes["industryKey"].lower()
+        industry_url = f"https://finance.yahoo.com/sectors/{sector_key}/{industry_key}"
+        st.expander("Industry").markdown(f" [{industry_name}]({industry_url}) ")
         st.expander("Country").write(quotes["country"])
         st.expander("Website").write(quotes["website"])
 
