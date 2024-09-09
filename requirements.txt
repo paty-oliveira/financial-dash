@@ -3,3 +3,4 @@ pytest
 streamlit-extras
 pandas
 yfinance
+plotly

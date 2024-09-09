@@ -1,3 +1,4 @@
+import plotly.graph_objects as go
 import streamlit as st
 
 from .raw_content import homepage_content, footer_content, not_found_ticker_content
@@ -76,7 +77,7 @@ def render_overview(financial_data):
     ticker = st.session_state["ticker"]
     historical_data = financial_data.get_historical_data(
         ticker,
-        columns=["Close"],
+        columns=["Close", "Open", "High", "Low"],
         period="max",
         interval="1d",
     )
@@ -85,7 +86,21 @@ def render_overview(financial_data):
 
     with stock_performance:
         st.markdown("#### Stock Performance")
-        st.line_chart(historical_data, x_label="Date", y_label="Price")
+        fig = go.Figure(
+            data=[
+                go.Candlestick(
+                    x=historical_data.index,
+                    open=historical_data["Open"],
+                    high=historical_data["High"],
+                    low=historical_data["Low"],
+                    close=historical_data["Close"],
+                )
+            ]
+        )
+        fig.update_layout(
+            xaxis_rangeslider_visible=False, xaxis_title="Date", yaxis_title="Price"
+        )
+        st.plotly_chart(fig, use_container_width=True, theme="streamlit")
 
     with ratios_summary:
         st.markdown("#### Price and Market Data")
