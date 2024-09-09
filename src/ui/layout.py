@@ -110,20 +110,32 @@ def render_overview(financial_data):
             st.write("Open")
             st.write("Day High")
             st.write("Day Low")
-            st.write("Bid")
-            st.write("Ask")
             st.write("Volume")
             st.write("Market Cap")
+            st.write("Beta")
+            st.write("PE Ratio")
+            st.write("EPS")
+            st.write("Forward Dividend & Yield")
 
         with values:
             st.write(f" **{quotes['previousClose']:,}**")
             st.write(f" **{quotes['open']:,}**")
             st.write(f" **{quotes['dayHigh']:,}**")
             st.write(f" **{quotes['dayLow']:,}**")
-            st.write(f" **{quotes['bid']:,} x {quotes['bidSize']}**")
-            st.write(f" **{quotes['ask']:,} x {quotes['askSize']}**")
             st.write(f" **{quotes['volume']:,}**")
             st.write(f" **{quotes['marketCap']:,}**")
+            st.write(f" **{quotes['beta']:.3}**")
+            st.write(f" **{quotes['trailingPE']:.4}**")
+            st.write(f" **{quotes['trailingEps']:.3}**")
+            dividend_rate = (
+                quotes["dividendRate"] if "dividendRate" in quotes.keys() else "0"
+            )
+            dividend_yield = (
+                quotes["dividendYield"] * 100
+                if "dividendRate" in quotes.keys()
+                else "0"
+            )
+            st.write(f" **{dividend_rate:.2} ({dividend_yield:.2}%)**")
 
     with st.container():
         st.markdown("#### Company Profile")
