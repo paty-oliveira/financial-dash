@@ -1,5 +1,4 @@
 import streamlit as st
-from soupsieve.util import lower
 
 from .raw_content import homepage_content, footer_content, not_found_ticker_content
 
@@ -88,17 +87,36 @@ def render_overview(financial_data):
         st.line_chart(historical_data, x_label="Date", y_label="Price")
 
     with ratios_summary:
-        st.markdown("#### Summary")
-        st.write("Placeholder for Company Summary")
+        st.markdown("#### Price and Market Data")
+        properties, values = st.columns(2)
+        with properties:
+            st.write("Previous Close")
+            st.write("Open")
+            st.write("Day High")
+            st.write("Day Low")
+            st.write("Bid")
+            st.write("Ask")
+            st.write("Volume")
+            st.write("Market Cap")
+
+        with values:
+            st.write(f" **{quotes['previousClose']:,}**")
+            st.write(f" **{quotes['open']:,}**")
+            st.write(f" **{quotes['dayHigh']:,}**")
+            st.write(f" **{quotes['dayLow']:,}**")
+            st.write(f" **{quotes['bid']:,} x {quotes['bidSize']}**")
+            st.write(f" **{quotes['ask']:,} x {quotes['askSize']}**")
+            st.write(f" **{quotes['volume']:,}**")
+            st.write(f" **{quotes['marketCap']:,}**")
 
     with st.container():
         st.markdown("#### Company Profile")
         st.expander("Business Summary").write(quotes["longBusinessSummary"])
         st.expander("Sector").markdown(
-            f" [{quotes['sector']}](https://finance.yahoo.com/sectors/{lower(quotes['sectorKey'])}) "
+            f" [{quotes['sector']}](https://finance.yahoo.com/sectors/{quotes['sectorKey'].lower()}) "
         )
         st.expander("Industry").markdown(
-            f" [{quotes['industry']}](https://finance.yahoo.com/sectors/{lower(quotes['sectorKey'])}/{lower(quotes['industryKey'])}) "
+            f" [{quotes['industry']}](https://finance.yahoo.com/sectors/{quotes['sectorKey'].lower()}/{quotes['industryKey'].lower()}) "
         )
         st.expander("Country").write(quotes["country"])
         st.expander("Website").write(quotes["website"])
