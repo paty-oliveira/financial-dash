@@ -2,6 +2,7 @@ import streamlit as st
 
 from .layout import render as render_layout
 from .sidebar import render as render_sidebar
+from .stylesheet import global_stylesheet
 
 initial_state = {"ticker": ""}
 
@@ -13,6 +14,9 @@ def run(financial_data, financial_calculations):
         layout="wide",
         initial_sidebar_state="expanded",
     )
+
+    # Injecting global CSS stylesheet
+    st.markdown(global_stylesheet, unsafe_allow_html=True)
 
     for k, v in initial_state.items():
         if k not in st.session_state:

@@ -2,7 +2,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from .raw_content import homepage_content, footer_content, not_found_ticker_content
-from .styling import apply_text_color
+from .styling import apply_text_color, apply_tag_style
 
 
 def render(financial_data, financial_calculations):
@@ -139,17 +139,31 @@ def render_overview(financial_data):
 
     with st.container():
         st.markdown("#### Company Profile")
-        st.expander("Business Summary").write(quotes["longBusinessSummary"])
+        st.write(quotes["longBusinessSummary"])
+
         sector_name = quotes["sector"]
         sector_key = quotes["sectorKey"].lower()
         sector_url = f"https://finance.yahoo.com/sectors/{sector_key}"
-        st.expander("Sector").markdown(f" [{sector_name}]({sector_url}) ")
+        sector_content = apply_tag_style(sector_url, sector_name)
+
         industry_name = quotes["industry"]
         industry_key = quotes["industryKey"].lower()
         industry_url = f"https://finance.yahoo.com/sectors/{sector_key}/{industry_key}"
-        st.expander("Industry").markdown(f" [{industry_name}]({industry_url}) ")
-        st.expander("Country").write(quotes["country"])
-        st.expander("Website").write(quotes["website"])
+        industry_content = apply_tag_style(industry_url, industry_name)
+
+        company_website = quotes["website"]
+        website_content = apply_tag_style(company_website, "Website")
+
+        st.markdown(
+            f"""
+                <div class='tags-container'>
+                    {sector_content}
+                    {industry_content}
+                    {website_content}
+                </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
 
 def render_balance_sheet(financial_data):
