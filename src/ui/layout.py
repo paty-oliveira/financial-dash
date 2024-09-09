@@ -1,6 +1,7 @@
 import streamlit as st
 
 from .raw_content import homepage_content, footer_content, not_found_ticker_content
+from .styling import apply_text_color
 
 
 def render(financial_data, financial_calculations):
@@ -135,7 +136,3 @@ def render_income_stmt(financial_data):
 def render_cashflow(financial_data):
     cashflow = financial_data.get_cashflow(st.session_state["ticker"])
     st.dataframe(cashflow)
-
-
-def apply_text_color(text, color):
-    return f"<span style='color:{color}'>{text}</span>"
