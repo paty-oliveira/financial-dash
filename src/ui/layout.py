@@ -49,14 +49,13 @@ def render_header(financial_data, financial_calculations):
     stock_info = financial_data.get_stock_info(
         st.session_state["ticker"],
     )
-    ticker = stock_info["symbol"]
-    company_name = stock_info["longName"]
-    st.markdown(f"### {ticker} - {company_name}", unsafe_allow_html=True)
+    st.markdown(
+        f"### {stock_info['symbol']} - {stock_info['longName']}", unsafe_allow_html=True
+    )
     # Render price change
     current_price = stock_info["currentPrice"]
     previous_close_price = stock_info["previousClose"]
-    currency = stock_info["currency"]
-    currency_symbol = financial_calculations["currency_symbol"](currency)
+    currency_symbol = financial_calculations["currency_symbol"](stock_info["currency"])
     current_price_content = f"{currency_symbol}{current_price}"
     price_diff = financial_calculations["price_changes"](
         current_price, previous_close_price
