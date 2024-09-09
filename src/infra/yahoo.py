@@ -33,7 +33,7 @@ class YahooFinance:
             logging.error(f"Error fetching stock info for {stock}: {e}")
 
     @staticmethod
-    def get_balance_sheet(ticker: str) -> pd.DataFrame:
+    def get_yearly_balance_sheet(ticker: str) -> pd.DataFrame:
         stock = yf.Ticker(ticker)
 
         try:
@@ -67,7 +67,7 @@ class YahooFinance:
             logging.error(f"Error fetching balance sheet for {stock}: {e}")
 
     @staticmethod
-    def get_income_statement(ticker: str) -> pd.DataFrame:
+    def get_yearly_income_statement(ticker: str) -> pd.DataFrame:
         stock = yf.Ticker(ticker)
 
         try:
@@ -96,7 +96,7 @@ class YahooFinance:
             logging.error(f"Error fetching income statement for {stock}: {e}")
 
     @staticmethod
-    def get_cashflow(ticker: str):
+    def get_yearly_cashflow(ticker: str):
         stock = yf.Ticker(ticker)
         try:
             fields = [
