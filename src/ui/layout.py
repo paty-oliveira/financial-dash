@@ -60,7 +60,7 @@ def render_header(financial_data, financial_calculations):
     price_diff = financial_calculations["price_changes"](
         current_price, previous_close_price
     )
-    price_diff_content = f"({price_diff}%)"
+    price_diff_content = f"({price_diff:.2}%)"
     price_change_content = (
         apply_text_color(price_diff_content, "red")
         if price_diff < 0
