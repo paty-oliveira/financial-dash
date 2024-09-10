@@ -59,15 +59,6 @@ class YahooFinance:
                 "Stockholders Equity",
             ]
 
-            balance_sheet.loc["Debt to Equity"] = (
-                balance_sheet.loc["Total Liabilities Net Minority Interest"]
-                / balance_sheet.loc["Stockholders Equity"]
-            )
-            balance_sheet.loc["Current Ratio"] = (
-                balance_sheet.loc["Current Assets"]
-                / balance_sheet.loc["Current Liabilities"]
-            )
-
             df_balance_sheet = balance_sheet.transpose()
             df_balance_sheet = df_balance_sheet.reindex(columns=fields, fill_value=0)
 
