@@ -327,7 +327,20 @@ def render_balance_sheet(financial_data, financial_calculations):
                 st.plotly_chart(fig, use_container_width=True)
 
             with total_debt_chart:
-                st.markdown("#### Total Debt Chart")
+                fig = go.Figure(
+                    data=[
+                        go.Bar(
+                            x=pd.DatetimeIndex(balance_sheet.index).date,
+                            y=balance_sheet["Total Debt"].values,
+                            name="Total Debt",
+                            marker_color="orange",
+                        )
+                    ]
+                )
+                fig.update_layout(
+                    xaxis=dict(type="category"), title="Total Debt Evolution"
+                )
+                st.plotly_chart(fig, use_container_width=True)
 
 
 def render_income_stmt(financial_data, *kwargs):
