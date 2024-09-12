@@ -233,12 +233,14 @@ def render_balance_sheet(financial_data, financial_calculations):
                 delta_color="inverse",
             )
 
-            current_debt_equity = float(
-                balance_sheet["Total Liabilities Net Minority Interest"][0]
-            ) / float(balance_sheet["Stockholders Equity"][0])
-            previous_debt_equity = float(
-                balance_sheet["Total Liabilities Net Minority Interest"][1]
-            ) / float(balance_sheet["Stockholders Equity"][1])
+            current_debt_equity = financial_calculations["debt_equity"](
+                float(balance_sheet["Total Liabilities Net Minority Interest"][0]),
+                float(balance_sheet["Stockholders Equity"][0]),
+            )
+            previous_debt_equity = financial_calculations["debt_equity"](
+                float(balance_sheet["Total Liabilities Net Minority Interest"][1]),
+                float(balance_sheet["Stockholders Equity"][1]),
+            )
             debt_equity_diff = financial_calculations["value_diff"](
                 current_debt_equity, previous_debt_equity
             )
@@ -249,11 +251,14 @@ def render_balance_sheet(financial_data, financial_calculations):
                 delta_color="inverse",
             )
 
-            current_ratio = float(balance_sheet["Current Assets"][0]) / float(
-                balance_sheet["Current Liabilities"][1]
+            current_ratio = financial_calculations["current_ratio"](
+                float(balance_sheet["Current Assets"][0]),
+                float(balance_sheet["Current Liabilities"][1]),
             )
-            previous_ratio = float(balance_sheet["Current Assets"][1]) / float(
-                balance_sheet["Current Liabilities"][1]
+
+            previous_ratio = financial_calculations["current_ratio"](
+                float(balance_sheet["Current Assets"][1]),
+                float(balance_sheet["Current Liabilities"][1]),
             )
             current_ratio_diff = financial_calculations["value_diff"](
                 current_ratio, previous_ratio
