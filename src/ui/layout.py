@@ -308,7 +308,7 @@ def render_balance_sheet(financial_data, financial_calculations):
                             x=pd.DatetimeIndex(balance_sheet.index).date,
                             y=balance_sheet["Total Assets"].values,
                             name="Total Assets",
-                            marker_color="green",
+                            marker_color="forestgreen",
                         ),
                         go.Bar(
                             x=pd.DatetimeIndex(balance_sheet.index).date,
@@ -316,7 +316,7 @@ def render_balance_sheet(financial_data, financial_calculations):
                                 "Total Liabilities Net Minority Interest"
                             ].values,
                             name="Total Liabilities",
-                            marker_color="red",
+                            marker_color="tomato",
                         ),
                     ]
                 )
@@ -333,7 +333,7 @@ def render_balance_sheet(financial_data, financial_calculations):
                             x=pd.DatetimeIndex(balance_sheet.index).date,
                             y=balance_sheet["Total Debt"].values,
                             name="Total Debt",
-                            marker_color="orange",
+                            marker_color="tomato",
                         )
                     ]
                 )
@@ -343,7 +343,7 @@ def render_balance_sheet(financial_data, financial_calculations):
                 st.plotly_chart(fig, use_container_width=True)
 
     with st.container():
-        invested_capital, liquidity = st.columns(2)
+        invested_capital, working_capital = st.columns(2)
 
         with invested_capital:
             fig = go.Figure(
@@ -352,7 +352,7 @@ def render_balance_sheet(financial_data, financial_calculations):
                         x=pd.DatetimeIndex(balance_sheet.index).date,
                         y=balance_sheet["Invested Capital"].values,
                         name="Invested Capital",
-                        marker_color="green",
+                        marker_color="forestgreen",
                     )
                 ]
             )
@@ -361,8 +361,21 @@ def render_balance_sheet(financial_data, financial_calculations):
             )
             st.plotly_chart(fig, use_container_width=True)
 
-        with liquidity:
-            st.write("Current Ratio plot")
+        with working_capital:
+            fig = go.Figure(
+                data=[
+                    go.Bar(
+                        x=pd.DatetimeIndex(balance_sheet.index).date,
+                        y=balance_sheet["Working Capital"].values,
+                        name="Working Capital",
+                        marker_color="dodgerblue",
+                    )
+                ]
+            )
+            fig.update_layout(
+                xaxis=dict(type="category"), title="Working Capital Evolution"
+            )
+            st.plotly_chart(fig, use_container_width=True)
 
 
 def render_income_stmt(financial_data, *kwargs):
