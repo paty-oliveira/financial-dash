@@ -1,3 +1,4 @@
+import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 from streamlit_pills import pills
@@ -294,7 +295,39 @@ def render_balance_sheet(financial_data, financial_calculations):
                 delta=f"{current_ratio_diff:.3} ({current_ratio_change:.2f}%)",
             )
 
+        st.divider()
+
         # Render Charts
+        with st.container():
+            assets_liabilities_chart, total_debt_chart = st.columns(2)
+
+            with assets_liabilities_chart:
+                fig = go.Figure(
+                    data=[
+                        go.Bar(
+                            x=pd.DatetimeIndex(balance_sheet.index).date,
+                            y=balance_sheet["Total Assets"].values,
+                            name="Total Assets",
+                            marker_color="green",
+                        ),
+                        go.Bar(
+                            x=pd.DatetimeIndex(balance_sheet.index).date,
+                            y=balance_sheet[
+                                "Total Liabilities Net Minority Interest"
+                            ].values,
+                            name="Total Liabilities",
+                            marker_color="red",
+                        ),
+                    ]
+                )
+                fig.update_layout(
+                    xaxis=dict(type="category"),
+                    title="Assets vs Liabilities",
+                )
+                st.plotly_chart(fig, use_container_width=True)
+
+            with total_debt_chart:
+                st.markdown("#### Total Debt Chart")
 
 
 def render_income_stmt(financial_data, *kwargs):

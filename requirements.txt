@@ -1,7 +1,10 @@
-streamlit
+streamlit~=1.37.1
 pytest
 streamlit-extras
-pandas
-yfinance
-plotly
+pandas~=2.2.2
+yfinance~=0.2.43
+plotly~=5.23.0
 streamlit-pills
+
+matplotlib~=3.9.2
+numpy~=2.1.0
