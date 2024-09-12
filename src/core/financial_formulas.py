@@ -1,2 +1,6 @@
-def calculate_price_changes(current_price, previous_close_price, decimal_point=2):
-    return ((current_price - previous_close_price) / previous_close_price) * 100
+def calculate_percentage_value_change(current_value, previous_value):
+    return ((current_value - previous_value) / previous_value) * 100
+
+
+def calculate_value_diff(current_value, previous_value):
+    return current_value - previous_value

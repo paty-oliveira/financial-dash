@@ -42,7 +42,7 @@ def render_stock_info(financial_data, financial_calculations):
     st_tabs = st.tabs(tab_titles)
     for tab, render_action in zip(st_tabs, tabs_renderings):
         with tab:
-            render_action(financial_data)
+            render_action(financial_data, financial_calculations)
 
 
 def render_header(financial_data, financial_calculations):
@@ -57,7 +57,7 @@ def render_header(financial_data, financial_calculations):
     previous_close_price = stock_info["previousClose"]
     currency_symbol = financial_calculations["currency_symbol"](stock_info["currency"])
     current_price_content = f"{currency_symbol}{current_price}"
-    price_diff = financial_calculations["price_changes"](
+    price_diff = financial_calculations["percentage_value_change"](
         current_price, previous_close_price
     )
     price_diff_content = f"({price_diff:.2}%)"
@@ -72,7 +72,7 @@ def render_header(financial_data, financial_calculations):
     )
 
 
-def render_overview(financial_data):
+def render_overview(financial_data, *kwargs):
     ticker = st.session_state["ticker"]
     historical_data = financial_data.get_historical_data(
         ticker,
@@ -169,11 +169,7 @@ def render_overview(financial_data):
         )
 
 
-def calculate_diff(current_value, previous_value):
-    return current_value - previous_value
-
-
-def render_balance_sheet(financial_data):
+def render_balance_sheet(financial_data, financial_calculations):
     balance_sheet = financial_data.get_balance_sheet(
         st.session_state["ticker"], frequency="quarterly"
     )
@@ -183,11 +179,14 @@ def render_balance_sheet(financial_data):
 
         current_total_assets = int(balance_sheet["Total Assets"][0])
         previous_total_assets = int(balance_sheet["Total Assets"][1])
-        total_assets_diff = calculate_diff(current_total_assets, previous_total_assets)
+        total_assets_diff = financial_calculations["value_diff"](
+            current_total_assets, previous_total_assets
+        )
+
         col1.metric(
             label="Total Assets",
             value=f"{current_total_assets:,}",
-            delta=f"{total_assets_diff:,}",
+            delta=f"{total_assets_diff:,} ",
         )
 
         current_total_liabilities = int(
@@ -196,25 +195,27 @@ def render_balance_sheet(financial_data):
         previous_total_liabilities = int(
             balance_sheet["Total Liabilities Net Minority Interest"][1]
         )
-        total_liabilities_diff = calculate_diff(
+        total_liabilities_diff = financial_calculations["value_diff"](
             current_total_liabilities, previous_total_liabilities
         )
+
         col2.metric(
             label="Total Liabilities",
             value=f"{current_total_liabilities:,}",
-            delta=f"{total_liabilities_diff:,}",
+            delta=f"{total_liabilities_diff:,} ",
             delta_color="inverse",
         )
 
         current_working_capital = int(balance_sheet["Working Capital"][0])
         previous_working_capital = int(balance_sheet["Working Capital"][1])
-        working_capital_diff = calculate_diff(
+        working_capital_diff = financial_calculations["value_diff"](
             current_working_capital, previous_working_capital
         )
+
         col3.metric(
             label="Working Capital",
             value=f"{current_working_capital:,}",
-            delta=f"{working_capital_diff:,}",
+            delta=f"{working_capital_diff:,} ",
         )
 
         with st.container():
@@ -222,7 +223,9 @@ def render_balance_sheet(financial_data):
 
             current_debt = int(balance_sheet["Total Debt"][0])
             previous_debt = int(balance_sheet["Total Debt"][1])
-            total_debt_diff = calculate_diff(current_debt, previous_debt)
+            total_debt_diff = financial_calculations["value_diff"](
+                current_debt, previous_debt
+            )
             col1.metric(
                 label="Total Debt",
                 value=f"{current_debt:,}",
@@ -236,7 +239,9 @@ def render_balance_sheet(financial_data):
             previous_debt_equity = float(
                 balance_sheet["Total Liabilities Net Minority Interest"][1]
             ) / float(balance_sheet["Stockholders Equity"][1])
-            debt_equity_diff = calculate_diff(current_debt_equity, previous_debt_equity)
+            debt_equity_diff = financial_calculations["value_diff"](
+                current_debt_equity, previous_debt_equity
+            )
             col2.metric(
                 label="Debt to Equity",
                 value=f"{current_debt_equity:.3}",
@@ -250,22 +255,25 @@ def render_balance_sheet(financial_data):
             previous_ratio = float(balance_sheet["Current Assets"][1]) / float(
                 balance_sheet["Current Liabilities"][1]
             )
-            current_ration_diff = calculate_diff(current_ratio, previous_ratio)
+            current_ratio_diff = financial_calculations["value_diff"](
+                current_ratio, previous_ratio
+            )
+
             col3.metric(
                 label="Current Ratio",
                 value=f"{current_ratio:.3}",
-                delta=f"{current_ration_diff:.3}",
+                delta=f"{current_ratio_diff:.3} ",
             )
 
 
-def render_income_stmt(financial_data):
+def render_income_stmt(financial_data, *kwargs):
     income_stmt = financial_data.get_income_statement(
         st.session_state["ticker"], frequency="quarterly"
     )
     st.dataframe(income_stmt)
 
 
-def render_cashflow(financial_data):
+def render_cashflow(financial_data, *kwargs):
     cashflow = financial_data.get_cashflow(
         st.session_state["ticker"], frequency="quarterly"
     )
