@@ -53,14 +53,14 @@ def render_header(financial_data, financial_calculations):
         f"### {stock_info['symbol']} - {stock_info['longName']}", unsafe_allow_html=True
     )
     # Render price change
-    current_price = stock_info["currentPrice"]
-    previous_close_price = stock_info["previousClose"]
+    current_price = float(stock_info["currentPrice"])
+    previous_close_price = float(stock_info["previousClose"])
     currency_symbol = financial_calculations["currency_symbol"](stock_info["currency"])
-    current_price_content = f"{currency_symbol}{current_price}"
+    current_price_content = f"{currency_symbol}{current_price:.2f}"
     price_diff = financial_calculations["percentage_value_change"](
         current_price, previous_close_price
     )
-    price_diff_content = f"({price_diff:.2}%)"
+    price_diff_content = f"({price_diff:.2f}%)"
     price_change_content = (
         apply_text_color(price_diff_content, "red")
         if price_diff < 0
