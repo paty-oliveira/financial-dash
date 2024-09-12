@@ -116,17 +116,17 @@ def render_overview(financial_data, *kwargs):
             "Forward Dividend & Yield",
         ]
         values_text = [
-            f"**{quotes['previousClose']:,}**",
-            f"**{quotes['open']:,}**",
-            f"**{quotes['dayHigh']:,}**",
-            f"**{quotes['dayLow']:,}**",
-            f"**{quotes['volume']:,}**",
-            f"**{quotes['marketCap']:,}**",
-            f"**{quotes['beta']:.3}**",
-            f"**{quotes['trailingPE']:.4}**",
-            f"**{quotes['trailingEps']:.3}**",
+            f"**{float(quotes['previousClose']):.2f}**",
+            f"**{float(quotes['open']):.2f}**",
+            f"**{float(quotes['dayHigh']):.2f}**",
+            f"**{float(quotes['dayLow']):.2f}**",
+            f"**{int(quotes['volume']):,}**",
+            f"**{int(quotes['marketCap']):,}**",
+            f"**{float(quotes['beta']):.2f}**",
+            f"**{float(quotes['trailingPE']):.2f}**",
+            f"**{float(quotes['trailingEps']):.2f}**",
             (
-                f"**{quotes['dividendRate']:.2} ({quotes['dividendYield'] * 100:.2}%)**"
+                f"**{float(quotes['dividendRate']):.2f} ({float(quotes['dividendYield']) * 100:.2f}%)**"
                 if "dividendRate" in quotes
                 else "0"
             ),
