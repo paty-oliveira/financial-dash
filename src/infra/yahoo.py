@@ -49,6 +49,7 @@ class YahooFinance:
 
         try:
             df_balance_sheet = balance_sheet.transpose()
+            df_balance_sheet.index = pd.DatetimeIndex(df_balance_sheet.index).date
 
             return df_balance_sheet.sort_index().tail(YahooFinance.NUMBER_ROWS)
         except Exception as e:
@@ -65,24 +66,8 @@ class YahooFinance:
         )
 
         try:
-            fields = [
-                "Total Revenue",
-                "Cost Of Revenue",
-                "Gross Profit",
-                "Operating Expense",
-                "Operating Income",
-                "Total Expenses",
-                "Net Income From Continuing Operation Net Minority Interest",
-                "EBIT",
-                "EBITDA",
-                "General And Administrative Expense",
-                "Selling And Marketing Expense",
-                "Research And Development",
-                "Basic EPS",
-            ]
-
             df_income_stmt = income_statement.transpose()
-            df_income_stmt = df_income_stmt.reindex(columns=fields, fill_value=0)
+            df_income_stmt.index = pd.DatetimeIndex(df_income_stmt.index).date
 
             return df_income_stmt.sort_index().tail(YahooFinance.NUMBER_ROWS)
 
@@ -100,15 +85,8 @@ class YahooFinance:
         )
 
         try:
-            fields = [
-                "Operating Cash Flow",
-                "Investing Cash Flow",
-                "Financing Cash Flow",
-                "Capital Expenditure",
-                "Free Cash Flow",
-            ]
             df_cashflow = cashflow.transpose()
-            df_cashflow = df_cashflow.reindex(columns=fields, fill_value=0)
+            df_cashflow.index = pd.DatetimeIndex(df_cashflow.index).date
 
             return df_cashflow.sort_index().tail(YahooFinance.NUMBER_ROWS)
 

@@ -1,4 +1,3 @@
-import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 from streamlit_pills import pills
@@ -305,13 +304,13 @@ def render_balance_sheet(financial_data, financial_calculations):
                 fig = go.Figure(
                     data=[
                         go.Bar(
-                            x=pd.DatetimeIndex(balance_sheet.index).date,
+                            x=balance_sheet.index,
                             y=balance_sheet["Total Assets"].values,
                             name="Total Assets",
                             marker_color="forestgreen",
                         ),
                         go.Bar(
-                            x=pd.DatetimeIndex(balance_sheet.index).date,
+                            x=balance_sheet.index,
                             y=balance_sheet[
                                 "Total Liabilities Net Minority Interest"
                             ].values,
@@ -330,7 +329,7 @@ def render_balance_sheet(financial_data, financial_calculations):
                 fig = go.Figure(
                     data=[
                         go.Bar(
-                            x=pd.DatetimeIndex(balance_sheet.index).date,
+                            x=balance_sheet.index,
                             y=balance_sheet["Total Debt"].values,
                             name="Total Debt",
                             marker_color="tomato",
@@ -349,7 +348,7 @@ def render_balance_sheet(financial_data, financial_calculations):
             fig = go.Figure(
                 data=[
                     go.Bar(
-                        x=pd.DatetimeIndex(balance_sheet.index).date,
+                        x=balance_sheet.index,
                         y=balance_sheet["Invested Capital"].values,
                         name="Invested Capital",
                         marker_color="forestgreen",
@@ -365,7 +364,7 @@ def render_balance_sheet(financial_data, financial_calculations):
             fig = go.Figure(
                 data=[
                     go.Bar(
-                        x=pd.DatetimeIndex(balance_sheet.index).date,
+                        x=balance_sheet.index,
                         y=balance_sheet["Working Capital"].values,
                         name="Working Capital",
                         marker_color="dodgerblue",
@@ -390,6 +389,9 @@ def render_income_stmt(financial_data, *kwargs):
     income_stmt = financial_data.get_income_statement(
         st.session_state["ticker"], frequency="quarterly"
     )
+
+    st.markdown("#### Income Statement Overview")
+    st.write("Hover over the table to download it as a CSV file")
     st.dataframe(income_stmt)
 
 
@@ -397,4 +399,7 @@ def render_cashflow(financial_data, *kwargs):
     cashflow = financial_data.get_cashflow(
         st.session_state["ticker"], frequency="quarterly"
     )
+
+    st.markdown("#### Cashflow Overview")
+    st.write("Hover over the table to download it as a CSV file")
     st.dataframe(cashflow)
