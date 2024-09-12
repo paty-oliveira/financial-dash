@@ -4,3 +4,4 @@ streamlit-extras
 pandas
 yfinance
 plotly
+streamlit-pills

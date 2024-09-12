@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 import streamlit as st
+from streamlit_pills import pills
 
 from .raw_content import homepage_content, footer_content, not_found_ticker_content
 from .styling import apply_text_color, apply_tag_style
@@ -169,11 +170,20 @@ def render_overview(financial_data, *kwargs):
         )
 
 
-def render_balance_sheet(financial_data, financial_calculations, frequency="yearly"):
+report_frequency_mapping = {
+    "Annual": "yearly",
+    "Quarterly": "quarterly",
+}
+
+
+def render_balance_sheet(financial_data, financial_calculations):
+    frequency = pills("Select report frequency:", ["Annual", "Quarterly"])
+
     balance_sheet = financial_data.get_balance_sheet(
-        st.session_state["ticker"], frequency=frequency
+        st.session_state["ticker"], frequency=report_frequency_mapping[frequency]
     )
 
+    # Render Metrics
     with st.container():
         col1, col2, col3 = st.columns(3)
 
@@ -283,6 +293,8 @@ def render_balance_sheet(financial_data, financial_calculations, frequency="year
                 value=f"{current_ratio:.3}",
                 delta=f"{current_ratio_diff:.3} ({current_ratio_change:.2f}%)",
             )
+
+        # Render Charts
 
 
 def render_income_stmt(financial_data, *kwargs):
