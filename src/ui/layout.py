@@ -342,6 +342,28 @@ def render_balance_sheet(financial_data, financial_calculations):
                 )
                 st.plotly_chart(fig, use_container_width=True)
 
+    with st.container():
+        invested_capital, liquidity = st.columns(2)
+
+        with invested_capital:
+            fig = go.Figure(
+                data=[
+                    go.Bar(
+                        x=pd.DatetimeIndex(balance_sheet.index).date,
+                        y=balance_sheet["Invested Capital"].values,
+                        name="Invested Capital",
+                        marker_color="green",
+                    )
+                ]
+            )
+            fig.update_layout(
+                xaxis=dict(type="category"), title="Invested Capital Evolution"
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+        with liquidity:
+            st.write("Current Ratio plot")
+
 
 def render_income_stmt(financial_data, *kwargs):
     income_stmt = financial_data.get_income_statement(
