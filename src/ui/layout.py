@@ -248,7 +248,7 @@ def render_balance_sheet(financial_data, financial_calculations):
             col1.metric(
                 label="Total Debt",
                 value=f"{current_debt:,}",
-                delta=f"{total_debt_diff:,} ({total_debt_change:.2f})%",
+                delta=f"{total_debt_diff:,} ({total_debt_change:.2f}%)",
                 delta_color="inverse",
             )
 
