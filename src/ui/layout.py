@@ -377,6 +377,14 @@ def render_balance_sheet(financial_data, financial_calculations):
             )
             st.plotly_chart(fig, use_container_width=True)
 
+    st.divider()
+
+    # Render Balance Sheet Overview
+    with st.container():
+        st.markdown("#### Balance Sheet Overview")
+        st.write("Hover over the table to download it as a CSV file")
+        st.dataframe(balance_sheet)
+
 
 def render_income_stmt(financial_data, *kwargs):
     income_stmt = financial_data.get_income_statement(
