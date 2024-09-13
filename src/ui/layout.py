@@ -124,7 +124,11 @@ def render_overview(financial_data, *kwargs):
             f"**{int(quotes['volume']):,}**",
             f"**{int(quotes['marketCap']):,}**",
             f"**{float(quotes['beta']):.2f}**",
-            f"**{float(quotes['trailingPE']):.2f}**",
+            (
+                f"**{float(quotes['trailingPE']):.2f}**"
+                if "trailingPE" in quotes
+                else "0"
+            ),
             f"**{float(quotes['trailingEps']):.2f}**",
             (
                 f"**{float(quotes['dividendRate']):.2f} ({float(quotes['dividendYield']) * 100:.2f}%)**"
