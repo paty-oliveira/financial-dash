@@ -389,7 +389,7 @@ def render_balance_sheet(financial_data, financial_calculations):
         st.dataframe(balance_sheet)
 
 
-def render_income_stmt(financial_data, *kwargs):
+def render_income_stmt(financial_data, financial_calculations):
     frequency = pills(
         "Select report frequency:",
         ["Annual", "Quarterly"],
@@ -400,6 +400,145 @@ def render_income_stmt(financial_data, *kwargs):
         st.session_state["ticker"], frequency=report_frequency_mapping[frequency]
     )
 
+    # Render metrics
+    with st.container():
+        col1, col2, col3 = st.columns(3)
+
+        current_total_revenue = int(income_stmt["Total Revenue"][0])
+        previous_total_revenue = int(income_stmt["Total Revenue"][1])
+        total_revenue_diff = financial_calculations["value_diff"](
+            current_total_revenue, previous_total_revenue
+        )
+        total_revenue_change = financial_calculations["percentage_value_change"](
+            current_total_revenue, previous_total_revenue
+        )
+        col1.metric(
+            label="Total Revenue",
+            value=f"{current_total_revenue:,}",
+            delta=f"{total_revenue_diff:,} ({total_revenue_change:.2f}%)",
+        )
+
+        current_cost_revenue = int(income_stmt["Cost Of Revenue"][0])
+        previous_cost_revenue = int(income_stmt["Cost Of Revenue"][1])
+        cost_revenue_diff = financial_calculations["value_diff"](
+            current_cost_revenue, previous_cost_revenue
+        )
+        cost_revenue_change = financial_calculations["percentage_value_change"](
+            current_cost_revenue, previous_cost_revenue
+        )
+        col2.metric(
+            label="Cost Of Revenue",
+            value=f"{current_cost_revenue:,}",
+            delta=f"{cost_revenue_diff:,} ({cost_revenue_change:.2f}%)",
+            delta_color="inverse",
+        )
+
+        current_gross_profit = int(income_stmt["Gross Profit"][0])
+        previous_gross_profit = int(income_stmt["Gross Profit"][1])
+        gross_profit_diff = financial_calculations["value_diff"](
+            current_gross_profit, previous_gross_profit
+        )
+        gross_profit_change = financial_calculations["percentage_value_change"](
+            current_gross_profit, previous_gross_profit
+        )
+        col3.metric(
+            label="Gross Profit",
+            value=f"{current_gross_profit:,}",
+            delta=f"{gross_profit_diff:,} ({gross_profit_change:.2f}%)",
+        )
+
+    with st.container():
+        col1, col2, col3 = st.columns(3)
+
+        current_operating_income = int(income_stmt["Operating Income"][0])
+        previous_operating_income = int(income_stmt["Operating Income"][1])
+        operating_income_diff = financial_calculations["value_diff"](
+            current_operating_income, previous_operating_income
+        )
+        operating_income_change = financial_calculations["percentage_value_change"](
+            current_operating_income, previous_operating_income
+        )
+        col1.metric(
+            label="Operating Income",
+            value=f"{current_operating_income:,}",
+            delta=f"{operating_income_diff:,} ({operating_income_change:.2f}%)",
+        )
+
+        current_operating_expense = int(income_stmt["Operating Expense"][0])
+        previous_operating_expense = int(income_stmt["Operating Expense"][1])
+        operating_expense_diff = financial_calculations["value_diff"](
+            current_operating_expense, previous_operating_expense
+        )
+        operating_expense_change = financial_calculations["percentage_value_change"](
+            current_operating_expense, previous_operating_expense
+        )
+        col2.metric(
+            label="Operating Expense",
+            value=f"{current_operating_expense:,}",
+            delta=f"{operating_expense_diff:,} ({operating_expense_change:.2f}%)",
+            delta_color="inverse",
+        )
+
+        current_total_expenses = int(income_stmt["Total Expenses"][0])
+        previous_total_expenses = int(income_stmt["Total Expenses"][1])
+        total_expenses_diff = financial_calculations["value_diff"](
+            current_total_expenses, previous_total_expenses
+        )
+        total_expenses_change = financial_calculations["percentage_value_change"](
+            current_total_expenses, previous_total_expenses
+        )
+        col3.metric(
+            label="Total Expenses",
+            value=f"{current_total_expenses:,}",
+            delta=f"{total_expenses_diff:,} ({total_expenses_change:.2f}%)",
+            delta_color="inverse",
+        )
+
+    with st.container():
+        col1, col2, col3 = st.columns(3)
+
+        current_net_income = int(income_stmt["Net Income"][0])
+        previous_net_income = int(income_stmt["Net Income"][1])
+        net_income_diff = financial_calculations["value_diff"](
+            current_net_income, previous_net_income
+        )
+        net_income_change = financial_calculations["percentage_value_change"](
+            current_net_income, previous_net_income
+        )
+        col1.metric(
+            label="Net Income",
+            value=f"{current_net_income:,}",
+            delta=f"{net_income_diff:,} ({net_income_change:.2f}%)",
+        )
+
+        current_eps = float(income_stmt["Diluted EPS"][0])
+        previous_eps = float(income_stmt["Diluted EPS"][1])
+        eps_diff = financial_calculations["value_diff"](current_eps, previous_eps)
+        eps_change = financial_calculations["percentage_value_change"](
+            current_eps, previous_eps
+        )
+        col2.metric(
+            label="Earnings Per Share (EPS)",
+            value=f"{current_eps:.2f}",
+            delta=f"{eps_diff:.2f} ({eps_change:.2f}%)",
+        )
+
+        current_ebitda = int(income_stmt["EBITDA"][0])
+        previous_ebitda = int(income_stmt["EBITDA"][1])
+        ebitda_diff = financial_calculations["value_diff"](
+            current_ebitda, previous_ebitda
+        )
+        ebitda_change = financial_calculations["percentage_value_change"](
+            current_ebitda, previous_ebitda
+        )
+        col3.metric(
+            label="Earnings Before Interest, Taxes, Depreciation and Amortisation (EBITDA)",
+            value=f"{current_ebitda:,}",
+            delta=f"{ebitda_diff:,} ({ebitda_change:.2f}%)",
+        )
+
+    st.divider()
+    # Render Income Statement Overview
     st.markdown("#### Income Statement Overview")
     st.write("Hover over the table to download it as a CSV file")
     st.dataframe(income_stmt)
