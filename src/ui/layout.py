@@ -406,8 +406,14 @@ def render_income_stmt(financial_data, *kwargs):
 
 
 def render_cashflow(financial_data, *kwargs):
+    frequency = pills(
+        "Select report frequency:",
+        ["Annual", "Quarterly"],
+        key="frequency_cashflow",
+    )
+
     cashflow = financial_data.get_cashflow(
-        st.session_state["ticker"], frequency="quarterly"
+        st.session_state["ticker"], frequency=report_frequency_mapping[frequency]
     )
 
     st.markdown("#### Cashflow Overview")
