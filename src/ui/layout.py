@@ -577,38 +577,62 @@ def render_income_stmt(financial_data, financial_calculations):
             st.plotly_chart(fig, use_container_width=True)
 
         with expenses:
-            fig = go.Figure(
-                data=[
-                    go.Bar(
-                        x=income_stmt.index,
-                        y=income_stmt["General And Administrative Expense"].values,
-                        name="Administrative Expense",
-                        marker_color="dodgerblue",
-                        marker=dict(cornerradius="5%"),
-                        width=0.6,
-                    ),
-                    go.Bar(
-                        x=income_stmt.index,
-                        y=income_stmt["Selling And Marketing Expense"].values,
-                        name="Marketing Expense",
-                        marker_color="lightskyblue",
-                        marker=dict(cornerradius="5%"),
-                        width=0.6,
-                    ),
-                    go.Bar(
-                        x=income_stmt.index,
-                        y=income_stmt["Research And Development"].values,
-                        name="Research Expense",
-                        marker_color="steelblue",
-                        marker=dict(cornerradius="5%"),
-                        width=0.6,
-                    ),
-                ]
-            )
-            fig.update_layout(
-                xaxis=dict(type="category"), title="Expenses Breakdown", barmode="stack"
-            )
-            st.plotly_chart(fig, use_container_width=True)
+            if {"Selling And Marketing Expense", "Research And Development"}.issubset(
+                income_stmt.columns
+            ):
+                fig = go.Figure(
+                    data=[
+                        go.Bar(
+                            x=income_stmt.index,
+                            y=income_stmt["General And Administrative Expense"].values,
+                            name="Administrative Expense",
+                            marker_color="dodgerblue",
+                            marker=dict(cornerradius="5%"),
+                            width=0.6,
+                        ),
+                        go.Bar(
+                            x=income_stmt.index,
+                            y=income_stmt["Selling And Marketing Expense"].values,
+                            name="Marketing Expense",
+                            marker_color="lightskyblue",
+                            marker=dict(cornerradius="5%"),
+                            width=0.6,
+                        ),
+                        go.Bar(
+                            x=income_stmt.index,
+                            y=income_stmt["Research And Development"].values,
+                            name="Research Expense",
+                            marker_color="steelblue",
+                            marker=dict(cornerradius="5%"),
+                            width=0.6,
+                        ),
+                    ]
+                )
+                fig.update_layout(
+                    xaxis=dict(type="category"),
+                    title="Expenses Breakdown",
+                    barmode="stack",
+                )
+                st.plotly_chart(fig, use_container_width=True)
+            else:
+                fig = go.Figure(
+                    data=[
+                        go.Bar(
+                            x=income_stmt.index,
+                            y=income_stmt["Total Expenses"].values,
+                            name="Total Expenses",
+                            marker_color="tomato",
+                            marker=dict(cornerradius="5%"),
+                            width=0.4,
+                        )
+                    ]
+                )
+                fig.update_layout(
+                    xaxis=dict(type="category"),
+                    title="Total Expenses Evolution",
+                    barmode="stack",
+                )
+                st.plotly_chart(fig, use_container_width=True)
 
     with st.container():
         eps, ebitda = st.columns(2)
