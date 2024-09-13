@@ -312,6 +312,7 @@ def render_balance_sheet(financial_data, financial_calculations):
                             y=balance_sheet["Total Assets"].values,
                             name="Total Assets",
                             marker_color="forestgreen",
+                            marker=dict(cornerradius="5%"),
                         ),
                         go.Bar(
                             x=balance_sheet.index,
@@ -320,6 +321,7 @@ def render_balance_sheet(financial_data, financial_calculations):
                             ].values,
                             name="Total Liabilities",
                             marker_color="tomato",
+                            marker=dict(cornerradius="5%"),
                         ),
                     ]
                 )
@@ -337,6 +339,8 @@ def render_balance_sheet(financial_data, financial_calculations):
                             y=balance_sheet["Total Debt"].values,
                             name="Total Debt",
                             marker_color="tomato",
+                            marker=dict(cornerradius="5%"),
+                            width=0.4,
                         )
                     ]
                 )
@@ -356,6 +360,8 @@ def render_balance_sheet(financial_data, financial_calculations):
                         y=balance_sheet["Invested Capital"].values,
                         name="Invested Capital",
                         marker_color="forestgreen",
+                        marker=dict(cornerradius="5%"),
+                        width=0.4,
                     )
                 ]
             )
@@ -372,6 +378,8 @@ def render_balance_sheet(financial_data, financial_calculations):
                         y=balance_sheet["Working Capital"].values,
                         name="Working Capital",
                         marker_color="dodgerblue",
+                        marker=dict(cornerradius="5%"),
+                        width=0.4,
                     )
                 ]
             )
@@ -538,6 +546,107 @@ def render_income_stmt(financial_data, financial_calculations):
         )
 
     st.divider()
+
+    # Render Charts
+    with st.container():
+        income, expenses = st.columns(2)
+
+        with income:
+            fig = go.Figure(
+                data=[
+                    go.Bar(
+                        x=income_stmt.index,
+                        y=income_stmt["Net Income"].values,
+                        name="Net Income",
+                        marker_color="mediumseagreen",
+                        marker=dict(cornerradius="5%"),
+                    ),
+                    go.Bar(
+                        x=income_stmt.index,
+                        y=income_stmt["Operating Income"].values,
+                        name="Operating Income",
+                        marker_color="forestgreen",
+                        marker=dict(cornerradius="5%"),
+                    ),
+                ]
+            )
+            fig.update_layout(
+                xaxis=dict(type="category"),
+                title="Net Income vs Operating Income",
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+        with expenses:
+            fig = go.Figure(
+                data=[
+                    go.Bar(
+                        x=income_stmt.index,
+                        y=income_stmt["General And Administrative Expense"].values,
+                        name="Administrative Expense",
+                        marker_color="dodgerblue",
+                        marker=dict(cornerradius="5%"),
+                        width=0.6,
+                    ),
+                    go.Bar(
+                        x=income_stmt.index,
+                        y=income_stmt["Selling And Marketing Expense"].values,
+                        name="Marketing Expense",
+                        marker_color="lightskyblue",
+                        marker=dict(cornerradius="5%"),
+                        width=0.6,
+                    ),
+                    go.Bar(
+                        x=income_stmt.index,
+                        y=income_stmt["Research And Development"].values,
+                        name="Research Expense",
+                        marker_color="steelblue",
+                        marker=dict(cornerradius="5%"),
+                        width=0.6,
+                    ),
+                ]
+            )
+            fig.update_layout(
+                xaxis=dict(type="category"), title="Expenses Breakdown", barmode="stack"
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+    with st.container():
+        eps, ebitda = st.columns(2)
+
+        with eps:
+            fig = go.Figure(
+                data=[
+                    go.Bar(
+                        x=income_stmt.index,
+                        y=income_stmt["Diluted EPS"].values,
+                        name="EPS",
+                        marker_color="forestgreen",
+                        marker=dict(cornerradius="5%"),
+                        width=0.4,
+                    )
+                ]
+            )
+            fig.update_layout(xaxis=dict(type="category"), title="EPS Evolution")
+            st.plotly_chart(fig, use_container_width=True)
+
+        with ebitda:
+            fig = go.Figure(
+                data=[
+                    go.Bar(
+                        x=income_stmt.index,
+                        y=income_stmt["EBITDA"].values,
+                        name="EBITDA",
+                        marker_color="dodgerblue",
+                        marker=dict(cornerradius="5%"),
+                        width=0.4,
+                    )
+                ]
+            )
+            fig.update_layout(xaxis=dict(type="category"), title="EBITDA Evolution")
+            st.plotly_chart(fig, use_container_width=True)
+
+    st.divider()
+
     # Render Income Statement Overview
     st.markdown("#### Income Statement Overview")
     st.write("Hover over the table to download it as a CSV file")
