@@ -4,7 +4,7 @@ from .layout import render as render_layout
 from .sidebar import render as render_sidebar
 from .stylesheet import global_stylesheet
 
-initial_state = {"ticker": ""}
+initial_state = {"ticker": "", "balance_sheet_frequency": "yearly"}
 
 
 def run(financial_data, financial_calculations):

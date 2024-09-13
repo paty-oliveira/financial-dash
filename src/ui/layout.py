@@ -177,7 +177,11 @@ report_frequency_mapping = {
 
 
 def render_balance_sheet(financial_data, financial_calculations):
-    frequency = pills("Select report frequency:", ["Annual", "Quarterly"])
+    frequency = pills(
+        "Select report frequency:",
+        ["Annual", "Quarterly"],
+        key="frequency_balance_sheet",
+    )
 
     balance_sheet = financial_data.get_balance_sheet(
         st.session_state["ticker"], frequency=report_frequency_mapping[frequency]
@@ -386,8 +390,14 @@ def render_balance_sheet(financial_data, financial_calculations):
 
 
 def render_income_stmt(financial_data, *kwargs):
+    frequency = pills(
+        "Select report frequency:",
+        ["Annual", "Quarterly"],
+        key="frequency_income_stmt",
+    )
+
     income_stmt = financial_data.get_income_statement(
-        st.session_state["ticker"], frequency="quarterly"
+        st.session_state["ticker"], frequency=report_frequency_mapping[frequency]
     )
 
     st.markdown("#### Income Statement Overview")
