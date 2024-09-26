@@ -681,7 +681,7 @@ def render_income_stmt(financial_data, financial_calculations):
     st.dataframe(income_stmt)
 
 
-def render_cashflow(financial_data, *kwargs):
+def render_cashflow(financial_data, financial_calculations):
     frequency = pills(
         "Select report frequency:",
         ["Annual", "Quarterly"],
@@ -691,6 +691,83 @@ def render_cashflow(financial_data, *kwargs):
     cashflow = financial_data.get_cashflow(
         st.session_state["ticker"], frequency=report_frequency_mapping[frequency]
     )
+
+    # Render metrics
+    with st.container():
+        col1, col2, col3 = st.columns(3)
+
+        current_operating_cashflow = int(cashflow["Operating Cash Flow"][0])
+        previous_operating_cashflow = int(cashflow["Operating Cash Flow"][1])
+        operating_cashflow_diff = financial_calculations["value_diff"](
+            current_operating_cashflow, previous_operating_cashflow
+        )
+        operating_cashflow_change = financial_calculations["percentage_value_change"](
+            current_operating_cashflow, previous_operating_cashflow
+        )
+        col1.metric(
+            label="Operating Cash Flow",
+            value=f"{current_operating_cashflow:,}",
+            delta=f"{operating_cashflow_diff:,} ({operating_cashflow_change:.2f}%)",
+        )
+
+        current_investing_cashflow = int(cashflow["Investing Cash Flow"][0])
+        previous_investing_cashflow = int(cashflow["Investing Cash Flow"][1])
+        investing_cashflow_diff = financial_calculations["value_diff"](
+            current_investing_cashflow, previous_investing_cashflow
+        )
+        investing_cashflow_change = financial_calculations["percentage_value_change"](
+            current_investing_cashflow, previous_investing_cashflow
+        )
+        col2.metric(
+            label="Investing Cash Flow",
+            value=f"{current_investing_cashflow:,}",
+            delta=f"{investing_cashflow_diff:,} ({investing_cashflow_change:.2f}%)",
+        )
+
+        current_financing_cashflow = int(cashflow["Financing Cash Flow"][0])
+        previous_financing_cashflow = int(cashflow["Financing Cash Flow"][1])
+        financing_cashflow_diff = financial_calculations["value_diff"](
+            current_financing_cashflow, previous_financing_cashflow
+        )
+        financing_cashflow_change = financial_calculations["percentage_value_change"](
+            current_financing_cashflow, previous_financing_cashflow
+        )
+        col3.metric(
+            label="Financing Cash Flow",
+            value=f"{current_financing_cashflow:,}",
+            delta=f"{financing_cashflow_diff:,} ({financing_cashflow_change:.2f}%)",
+        )
+
+    with st.container():
+        col1, col2, col3 = st.columns(3)
+
+        current_capital_expenditure = int(cashflow["Capital Expenditure"][0])
+        previous_capital_expenditure = int(cashflow["Capital Expenditure"][1])
+        capital_expenditure_diff = financial_calculations["value_diff"](
+            current_capital_expenditure, previous_capital_expenditure
+        )
+        capital_expenditure_change = financial_calculations["percentage_value_change"](
+            current_capital_expenditure, previous_capital_expenditure
+        )
+        col1.metric(
+            label="Capital Expenditure",
+            value=f"{current_capital_expenditure:,}",
+            delta=f"{capital_expenditure_diff:,} ({capital_expenditure_change:.2f}%)",
+        )
+
+        current_free_cashflow = int(cashflow["Free Cash Flow"][0])
+        previous_free_cashflow = int(cashflow["Free Cash Flow"][1])
+        free_cashflow_diff = financial_calculations["value_diff"](
+            current_free_cashflow, previous_free_cashflow
+        )
+        free_cashflow_change = financial_calculations["percentage_value_change"](
+            current_free_cashflow, previous_free_cashflow
+        )
+        col2.metric(
+            label="Free Cash Flow",
+            value=f"{current_free_cashflow:,}",
+            delta=f"{free_cashflow_diff:,} ({free_cashflow_change:.2f}%)",
+        )
 
     st.markdown("#### Cashflow Overview")
     st.write("Hover over the table to download it as a CSV file")
