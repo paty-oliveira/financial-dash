@@ -7,7 +7,7 @@ accessing essential stock data and insights.
 
 ### How to use the Dashboard :nerd_face:
 
-1. **Search for a Stock**: To get started, enter a stock ticker (e.g., **AAPL** for Apple, **MSFT** for Microsoft, *
+1. **Search for a Stock**: To get started, enter a stock ticker (e.g., **AAPL** for Apple, **MSFT** for Microsoft,
    **TSLA** for
    Tesla) into the search bar on the left sidebar. Once you input a ticker, the dashboard will display key metrics,
    historical data, charts, and relevant financial information about the stock.
