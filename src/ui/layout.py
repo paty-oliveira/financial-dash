@@ -790,6 +790,89 @@ def render_cashflow(financial_data, financial_calculations):
             delta=f"{free_cashflow_diff:,} ({free_cashflow_change:.2f}%)",
         )
 
+    st.divider()
+    # Render charts
+
+    with st.container():
+        operating_cashflow, investing_cashflow = st.columns(2)
+
+        with operating_cashflow:
+            fig = go.Figure(
+                data=[
+                    go.Bar(
+                        x=cashflow.index,
+                        y=cashflow["Operating Cash Flow"].values,
+                        name="Operating Cash Flow",
+                        marker_color="forestgreen",
+                        marker=dict(cornerradius="5%"),
+                        width=0.4,
+                    )
+                ]
+            )
+            fig.update_layout(
+                xaxis=dict(type="category"), title="Operating Cash Flow Evolution"
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+        with investing_cashflow:
+            fig = go.Figure(
+                data=[
+                    go.Bar(
+                        x=cashflow.index,
+                        y=cashflow["Investing Cash Flow"].values,
+                        name="Investing Cash Flow",
+                        marker_color="dodgerblue",
+                        marker=dict(cornerradius="5%"),
+                        width=0.4,
+                    )
+                ]
+            )
+            fig.update_layout(
+                xaxis=dict(type="category"), title="Investing Cash Flow Evolution"
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+    with st.container():
+        financing_cashflow, free_cashflow = st.columns(2)
+
+        with financing_cashflow:
+            fig = go.Figure(
+                data=[
+                    go.Bar(
+                        x=cashflow.index,
+                        y=cashflow["Financing Cash Flow"].values,
+                        name="Financing Cash Flow",
+                        marker_color="forestgreen",
+                        marker=dict(cornerradius="5%"),
+                        width=0.4,
+                    )
+                ]
+            )
+            fig.update_layout(
+                xaxis=dict(type="category"), title="Financing Cash Flow Evolution"
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+        with free_cashflow:
+            fig = go.Figure(
+                data=[
+                    go.Bar(
+                        x=cashflow.index,
+                        y=cashflow["Free Cash Flow"].values,
+                        name="Free Cash Flow",
+                        marker_color="dodgerblue",
+                        marker=dict(cornerradius="5%"),
+                        width=0.4,
+                    )
+                ]
+            )
+            fig.update_layout(
+                xaxis=dict(type="category"), title="Free Cash Flow Evolution"
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+    st.divider()
+
     st.markdown("#### Cashflow Overview")
     st.write("Hover over the table to download it as a CSV file")
     st.dataframe(cashflow)
