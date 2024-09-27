@@ -7,7 +7,9 @@ from .stylesheet import global_stylesheet
 initial_state = {"ticker": "", "balance_sheet_frequency": "yearly"}
 
 
-def run(financial_data, financial_calculations):
+def run(financial_data, financial_calculations, configs):
+    feedback_form_url = configs["general"]["feedback_form_url"]
+
     st.set_page_config(
         page_title="Stock Analysis Dashboard",
         page_icon=":chart_with_upwards_trend:",
@@ -24,4 +26,4 @@ def run(financial_data, financial_calculations):
 
     # performs the rendering
     render_layout(financial_data, financial_calculations)
-    render_sidebar()
+    render_sidebar(feedback_form_url)

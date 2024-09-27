@@ -18,7 +18,22 @@ global_stylesheet = """
     }
     .tag:hover {
         opacity: 0.5;
+    }
 
+    .feedback-btn {
+        width: 100%;
+        background-color: #ff6f61;
+        color: white;
+        padding: 0.5em 1.5em;
+        margin: 0.2em;
+        border-radius: 5px;
+        font-size: 1em;
+        border: 0;
+        cursor: pointer;
+    }
+
+    .feedback-btn:hover {
+        opacity: 0.5;
     }
     </style>
 """
