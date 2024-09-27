@@ -6,7 +6,7 @@ global_stylesheet = """
         gap: 0.5em;
         margin-top: 1em;
     }
-    .tag {
+    .tag, .link {
         display: inline-block;
         background-color: #ff6f61;
         color: white;

@@ -3,7 +3,7 @@ import streamlit as st
 from streamlit_pills import pills
 
 from .raw_content import homepage_content, footer_content, not_found_ticker_content
-from .styling import apply_text_color, apply_tag_style
+from .styling import apply_text_color, apply_link_style, apply_tag_style
 
 
 def render(financial_data, financial_calculations):
@@ -149,18 +149,11 @@ def render_overview(financial_data, *kwargs):
         st.markdown("#### Company Profile")
         st.write(quotes["longBusinessSummary"])
 
-        sector_key = quotes["sectorKey"].lower()
-        sector_content = apply_tag_style(
-            f"https://finance.yahoo.com/sectors/{sector_key}", quotes["sector"]
-        )
-
-        industry_key = quotes["industryKey"].lower()
+        sector_content = apply_tag_style(quotes["sector"])
         industry_content = apply_tag_style(
-            f"https://finance.yahoo.com/sectors/{sector_key}/{industry_key}",
             quotes["industry"],
         )
-
-        website_content = apply_tag_style(quotes["website"], "Website")
+        website_content = apply_link_style(quotes["website"], "Website")
 
         st.markdown(
             f"""
