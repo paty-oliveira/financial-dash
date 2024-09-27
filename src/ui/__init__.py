@@ -9,6 +9,7 @@ initial_state = {"ticker": "", "balance_sheet_frequency": "yearly"}
 
 def run(financial_data, financial_calculations, configs):
     feedback_form_url = configs["general"]["feedback_form_url"]
+    contribution_url = configs["general"]["contribution_url"]
 
     st.set_page_config(
         page_title="Stock Analysis Dashboard",
@@ -26,4 +27,4 @@ def run(financial_data, financial_calculations, configs):
 
     # performs the rendering
     render_layout(financial_data, financial_calculations)
-    render_sidebar(feedback_form_url)
+    render_sidebar(feedback_form_url, contribution_url)

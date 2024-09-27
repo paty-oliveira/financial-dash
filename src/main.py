@@ -1,3 +1,5 @@
+import os
+
 import toml
 
 import core
@@ -21,7 +23,7 @@ def initialize_financial_formulas():
 
 
 def main():
-    configs = toml.load("config.toml")
+    configs = toml.load(os.path.abspath("config.toml"))
     initialize_financial_provider(infra.YAHOO)
     initialize_financial_formulas()
     ui.run(_financial_provider, _financial_calculations, configs)
