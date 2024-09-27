@@ -1,4 +1,7 @@
+import os
+
 import streamlit as st
+import streamlit.components.v1 as components
 
 from .layout import render as render_layout
 from .sidebar import render as render_sidebar
@@ -18,9 +21,15 @@ def run(financial_data, financial_calculations, configs):
         initial_sidebar_state="expanded",
     )
 
+    # Add Google Analytics Tracking
+    with open(os.path.abspath("google_analytics.html")) as f:
+        html_code = f.read()
+        components.html(html_code, height=0)
+
     # Injecting global CSS stylesheet
     st.markdown(global_stylesheet, unsafe_allow_html=True)
 
+    # Creating Session State
     for k, v in initial_state.items():
         if k not in st.session_state:
             st.session_state[k] = v
