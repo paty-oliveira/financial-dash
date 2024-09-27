@@ -1,5 +1,3 @@
-import os.path
-
 import streamlit as st
 import streamlit.components.v1 as components
 
@@ -22,7 +20,7 @@ def run(financial_data, financial_calculations, configs):
     )
 
     # Add Google Analytics Tracking
-    with open(os.path.abspath("src/ui/google_analytics.html")) as f:
+    with open("src/ui/google_analytics.html", "r") as f:
         html_code = f.read()
         components.html(html_code, height=0)
 
