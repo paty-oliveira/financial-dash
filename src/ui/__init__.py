@@ -1,3 +1,4 @@
+import os
 import pathlib
 
 import streamlit as st
@@ -10,10 +11,10 @@ from .stylesheet import global_stylesheet
 initial_state = {"ticker": "", "balance_sheet_frequency": "yearly"}
 
 
-def run(financial_data, financial_calculations, configs):
-    feedback_form_url = configs["general"]["feedback_form_url"]
-    contribution_url = configs["general"]["contribution_url"]
-    ga_tracking_id = configs["general"]["ga_tracking_id"]
+def run(financial_data, financial_calculations):
+    feedback_form_url = os.getenv("FEEDBACK_FORM_URL")
+    donation_url = os.getenv("DONATION_URL")
+    ga_tracking_id = os.getenv("GA_TRACKING_ID")
 
     st.set_page_config(
         page_title="Stock Analysis Dashboard",
@@ -57,4 +58,4 @@ def run(financial_data, financial_calculations, configs):
 
     # performs the rendering
     render_layout(financial_data, financial_calculations)
-    render_sidebar(feedback_form_url, contribution_url)
+    render_sidebar(feedback_form_url, donation_url)

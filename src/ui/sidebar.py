@@ -2,11 +2,11 @@ import streamlit as st
 from streamlit_extras.buy_me_a_coffee import button
 
 
-def render(feedback_form_url, contribution_url):
+def render(feedback_form_url, donation_url):
     with st.sidebar:
         st.title("Dashboard :bar_chart:")
         st.text_input("Enter a stock ticker:", key="ticker", type="default")
-        button(username=contribution_url, floating=True)
+        button(username=donation_url, floating=True)
 
         with st.container():
             st.write("### We would love your feedback!")

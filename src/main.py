@@ -1,6 +1,4 @@
-import os
-
-import toml
+from dotenv import load_dotenv
 
 import core
 import infra
@@ -23,10 +21,10 @@ def initialize_financial_formulas():
 
 
 def main():
-    configs = toml.load(os.path.abspath("config.toml"))
+    load_dotenv()
     initialize_financial_provider(infra.YAHOO)
     initialize_financial_formulas()
-    ui.run(_financial_provider, _financial_calculations, configs)
+    ui.run(_financial_provider, _financial_calculations)
 
 
 if __name__ == "__main__":

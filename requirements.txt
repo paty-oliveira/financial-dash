@@ -9,3 +9,4 @@ matplotlib~=3.9.2
 numpy~=2.1.0
 toml~=0.10.2
 beautifulsoup4
+python-dotenv
