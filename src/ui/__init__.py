@@ -10,7 +10,6 @@ initial_state = {"ticker": "", "balance_sheet_frequency": "yearly"}
 
 
 def run(financial_data, financial_calculations):
-    feedback_form_url = os.getenv("FEEDBACK_FORM_URL")
     donation_url = os.getenv("DONATION_URL")
 
     st.set_page_config(
@@ -30,4 +29,4 @@ def run(financial_data, financial_calculations):
 
     # performs the rendering
     render_layout(financial_data, financial_calculations)
-    render_sidebar(feedback_form_url, donation_url)
+    render_sidebar(donation_url)

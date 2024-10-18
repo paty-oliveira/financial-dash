@@ -36,6 +36,19 @@ everyone. You can support us by buying a coffee on [Buy Me A Coffee](https://buy
 bit helps, and we
 deeply appreciate your support!
 
+
+### Give Your Feedback 💬
+
+We'd love to hear your thoughts on how we can improve the dashboard! Your feedback helps us make this tool even better for the community.
+
+- **Have suggestions?**
+- **Encountered any issues?**
+- **Want to share your experience?**
+Please take a moment to fill out our feedback form. We appreciate your input! 🙏
+
+[Submit Feedback via Google Form](https://docs.google.com/forms/d/e/1FAIpQLSdE--m0Q4A5LYe0sClEK21Iz268KfGaaZNGEja1QOQKN_mpeA/viewform?usp=sf_link)
+
+
 ### :point_down: Follow for Updates
 
 - [Linkedin](https://www.linkedin.com/in/ana-patr%C3%ADcia-oliveira/)
