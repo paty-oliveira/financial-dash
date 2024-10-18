@@ -13,10 +13,8 @@ def render(feedback_form_url, donation_url):
             st.markdown(" Click the link below to access the feedback form.")
             st.markdown(
                 f"""
-                <a href="{feedback_form_url}" target="_blank">
-                    <button class="feedback-btn">
-                        Submit Feedback
-                    </button>
+                <a href="{feedback_form_url}" target="_blank" class="feedback-btn">
+                    Submit Feedback
                 </a>
                 """,
                 unsafe_allow_html=True,

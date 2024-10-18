@@ -30,10 +30,25 @@ global_stylesheet = """
         font-size: 1em;
         border: 0;
         cursor: pointer;
+        text-decoration: none;
     }
+
+    .feedback-btn:link {
+        color: white;
+        text-decoration: none;
+    }
+
+    .feedback-btn:active {
+        color: white;
+        text-decoration: none;
+    }
+
+
 
     .feedback-btn:hover {
         opacity: 0.5;
+        text-decoration: none;
+        color: white;
     }
     </style>
 """
